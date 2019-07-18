@@ -1,0 +1,14 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP R-78E3.3-0.5
+D A Switching-Regulator with a 78XX compatible Pinout, 75-88% Efficiency
+K switching regulator, 78XX, Fixed Output 3,3V, 500mA
+F https://cdn-reichelt.de/documents/datenblatt/D400/R-78EXX-0.5.pdf
+$ENDCMP
+#
+$CMP R-78E5.0-0.5
+D A Switching-Regulator with a 78XX compatible Pinout, 75-88% Efficiency
+K switching regulator, 78XX, Fixed Output 5V, 500mA
+$ENDCMP
+#
+#End Doc Library
