@@ -1,4 +1,229 @@
-EESchema Schematic File Version 2
-EELAYER 25 0
+EESchema Schematic File Version 4
+LIBS:yolocolo_periphery-cache
+EELAYER 29 0
 EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:Barrel_Jack J?
+U 1 1 5D30005F
+P 900 1100
+F 0 "J?" H 750 1300 50  0000 C CNN
+F 1 "Barrel_Jack" H 900 900 50  0000 C CNN
+F 2 "" H 950 1060 50  0001 C CNN
+F 3 "~" H 950 1060 50  0001 C CNN
+	1    900  1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+24V #PWR?
+U 1 1 5D300886
+P 1650 950
+F 0 "#PWR?" H 1650 800 50  0001 C CNN
+F 1 "+24V" H 1665 1123 50  0000 C CNN
+F 2 "" H 1650 950 50  0001 C CNN
+F 3 "" H 1650 950 50  0001 C CNN
+	1    1650 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D300EC1
+P 1650 1250
+F 0 "#PWR?" H 1650 1000 50  0001 C CNN
+F 1 "GND" H 1655 1077 50  0000 C CNN
+F 2 "" H 1650 1250 50  0001 C CNN
+F 3 "" H 1650 1250 50  0001 C CNN
+	1    1650 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1200 1200 1350 1200
+Wire Wire Line
+	1650 1200 1650 1250
+Wire Wire Line
+	1650 950  1650 1000
+Wire Wire Line
+	1650 1000 1350 1000
+$Comp
+L power:PWR_FLAG #FLG?
+U 1 1 5D301554
+P 1350 950
+F 0 "#FLG?" H 1350 1025 50  0001 C CNN
+F 1 "PWR_FLAG" H 1350 1123 50  0000 C CNN
+F 2 "" H 1350 950 50  0001 C CNN
+F 3 "~" H 1350 950 50  0001 C CNN
+	1    1350 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG?
+U 1 1 5D3017DC
+P 1350 1250
+F 0 "#FLG?" H 1350 1325 50  0001 C CNN
+F 1 "PWR_FLAG" H 1350 1423 50  0000 C CNN
+F 2 "" H 1350 1250 50  0001 C CNN
+F 3 "~" H 1350 1250 50  0001 C CNN
+	1    1350 1250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1350 1200 1350 1250
+Connection ~ 1350 1200
+Wire Wire Line
+	1350 1200 1650 1200
+Wire Wire Line
+	1350 950  1350 1000
+Connection ~ 1350 1000
+Wire Wire Line
+	1350 1000 1200 1000
+$Comp
+L Switching_Regulators:R-78E3.3-0.5 U?
+U 1 1 5D305EE7
+P 3250 1000
+F 0 "U?" H 3075 750 50  0000 C CNN
+F 1 "R-78E3.3-0.5" H 3250 1125 50  0000 C CNN
+F 2 "" H 3250 1000 50  0001 C CNN
+F 3 "https://cdn-reichelt.de/documents/datenblatt/D400/R-78EXX-0.5.pdf" H 3250 1000 50  0001 C CNN
+	1    3250 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 5D3082C3
+P 2200 1200
+F 0 "C?" H 2318 1246 50  0000 L CNN
+F 1 "100μF" H 2318 1155 50  0000 L CNN
+F 2 "" H 2238 1050 50  0001 C CNN
+F 3 "~" H 2200 1200 50  0001 C CNN
+	1    2200 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5D309A9E
+P 2650 1200
+F 0 "C?" H 2765 1246 50  0000 L CNN
+F 1 "100nF" H 2765 1155 50  0000 L CNN
+F 2 "" H 2688 1050 50  0001 C CNN
+F 3 "~" H 2650 1200 50  0001 C CNN
+	1    2650 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 5D30AA06
+P 3850 1200
+F 0 "C?" H 3968 1246 50  0000 L CNN
+F 1 "100μF" H 3968 1155 50  0000 L CNN
+F 2 "" H 3888 1050 50  0001 C CNN
+F 3 "~" H 3850 1200 50  0001 C CNN
+	1    3850 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5D30AA10
+P 4300 1200
+F 0 "C?" H 4415 1246 50  0000 L CNN
+F 1 "100nF" H 4415 1155 50  0000 L CNN
+F 2 "" H 4338 1050 50  0001 C CNN
+F 3 "~" H 4300 1200 50  0001 C CNN
+	1    4300 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 1050 2650 1000
+Wire Wire Line
+	2650 1000 2950 1000
+Wire Wire Line
+	2200 1050 2200 1000
+Wire Wire Line
+	2200 1000 2650 1000
+Connection ~ 2650 1000
+Wire Wire Line
+	3550 1000 3850 1000
+Wire Wire Line
+	3850 1000 3850 1050
+Wire Wire Line
+	3850 1000 4300 1000
+Wire Wire Line
+	4300 1000 4300 1050
+Connection ~ 3850 1000
+$Comp
+L power:+24V #PWR?
+U 1 1 5D312186
+P 2050 950
+F 0 "#PWR?" H 2050 800 50  0001 C CNN
+F 1 "+24V" H 2065 1123 50  0000 C CNN
+F 2 "" H 2050 950 50  0001 C CNN
+F 3 "" H 2050 950 50  0001 C CNN
+	1    2050 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 950  2050 1000
+Wire Wire Line
+	2050 1000 2200 1000
+Connection ~ 2200 1000
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5D313437
+P 4450 950
+F 0 "#PWR?" H 4450 800 50  0001 C CNN
+F 1 "+3.3V" H 4465 1123 50  0000 C CNN
+F 2 "" H 4450 950 50  0001 C CNN
+F 3 "" H 4450 950 50  0001 C CNN
+	1    4450 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 950  4450 1000
+Wire Wire Line
+	4450 1000 4300 1000
+Connection ~ 4300 1000
+$Comp
+L power:GND #PWR?
+U 1 1 5D313B44
+P 3250 1500
+F 0 "#PWR?" H 3250 1250 50  0001 C CNN
+F 1 "GND" H 3255 1327 50  0000 C CNN
+F 2 "" H 3250 1500 50  0001 C CNN
+F 3 "" H 3250 1500 50  0001 C CNN
+	1    3250 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 1350 2200 1400
+Wire Wire Line
+	2200 1400 2650 1400
+Wire Wire Line
+	4300 1400 4300 1350
+Wire Wire Line
+	3850 1350 3850 1400
+Connection ~ 3850 1400
+Wire Wire Line
+	3850 1400 4300 1400
+Wire Wire Line
+	2650 1350 2650 1400
+Connection ~ 2650 1400
+Wire Wire Line
+	2650 1400 3250 1400
+Wire Wire Line
+	3250 1300 3250 1400
+Connection ~ 3250 1400
+Wire Wire Line
+	3250 1400 3850 1400
+Wire Wire Line
+	3250 1400 3250 1500
 $EndSCHEMATC
