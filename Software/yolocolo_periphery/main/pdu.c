@@ -70,7 +70,7 @@ size_t commandSet(unsigned char address, char* name, size_t nameSize,
 	sprintf(&dst[pos], "%02hu", address);
 	pos += ADDRESS_LENGTH;
 
-	strcpy(name, &dst[pos]);
+	strcpy(&dst[pos], name);
 	pos += nameSize;
 	pos = pad0(NAME_LENGTH - nameSize, pos, dst);
 
