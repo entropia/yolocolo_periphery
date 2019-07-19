@@ -4,7 +4,6 @@
 #include <string.h>
 #include "pdu.h"
 
-//returns new pos
 size_t pad0(size_t count, size_t pos, char *dst)
 {
 	for (size_t i = 0; i < pos + count; i++) {
@@ -14,19 +13,17 @@ size_t pad0(size_t count, size_t pos, char *dst)
 	return pos + count;
 }
 
-//Add's start and stop byte to frame
-size_t completeFrame(char *src, size_t srcSize, char **dst)
+size_t completeFrame(char *src, size_t srcSize, char *dst)
 {
 	if(srcSize == 0) {
 		return 0;
 	}
 
 	size_t dstSize = srcSize + 2 * sizeof(char);
-	*dst = malloc(dstSize);
-
-	**dst = START_BYTE;
-	memcpy((*dst + 1), src, srcSize);
-	*(*dst + 1 + srcSize) = STOP_BYTE;
+	
+	dst[0] = START_BYTE;
+	memcpy(&dst[1], src, srcSize);
+	dst[dstSize - 1] = STOP_BYTE;
 
 	return dstSize;
 }
@@ -46,7 +43,6 @@ unsigned short calculateChecksum(char *src, size_t size)
 	return checksum;
 }
 
-//Only produces the string to be printed
 size_t commandSet(unsigned char address, char *name, size_t nameSize,
 		  	unsigned short switchState, unsigned short lowAlarm,
 		 	unsigned highAlarm, char *dst)
