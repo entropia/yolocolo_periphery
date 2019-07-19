@@ -4,6 +4,10 @@
 static const char START_BYTE = 0x02;
 static const char STOP_BYTE = 0x03;
 static const char SET_BYTE = 'J';
+static const char SET_RECV_BYTE = 'j';
+static const char QUERRY_BYTE = 'I';
+static const char QUERRY_RECV_BYTE = 'i';
+
 
 static const size_t ADDRESS_LENGTH = sizeof(unsigned short);
 static const size_t NAME_LENGTH = 10;
