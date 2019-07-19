@@ -80,12 +80,14 @@ size_t commandSet(unsigned char address, char* name, size_t nameSize,
 	sprintf(&dst[pos], "%02hu", switchState);
 	pos += STATE_LENGTH;
 
-	pos = pad0(SET_FIRST_UNKNOWN_LENGTH, pos, dst);
-	
+	sprintf(&dst[pos], "%0*d\n", SET_FIRST_UNKNOWN_LENGTH, 0); 
+	pos += SET_FIRST_UNKNOWN_LENGTH;
+
 	sprintf(&dst[pos], "%hX", lowAlarm);
 	pos++;
 
-	pos = pad0(SET_SECOND_UNKNOWN_LENGTH, pos, dst);
+	sprintf(&dst[pos], "%0*d\n", SET_SECOND_UNKNOWN_LENGTH, 0); 
+	pos += SET_SECOND_UNKNOWN_LENGTH;
 
 	sprintf(&dst[pos], "%hX", highAlarm);
 	pos++;
