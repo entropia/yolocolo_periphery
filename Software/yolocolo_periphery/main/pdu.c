@@ -34,7 +34,7 @@ size_t completeFrame(char* src, size_t srcSize, char** dst)
 unsigned short calculateChecksum(char* src, size_t size) 
 {
 	if (size == 0) {
-		printf("Checksum error: Length of src is zeor");
+		printf("Checksum error: Length of src is zero");
 		return 0;
 	}
 
@@ -52,15 +52,18 @@ size_t commandSet(unsigned char address, char* name, size_t nameSize,
 		 	unsigned highAlarm, char *dst)
 {
 	if (address == 0 || address > 8) {
-		printf("Invalid address (%u)", address);
+		printf("Invalid address (%u)\n", address);
 		return 0;
 	}
 
 	if (nameSize == 0) {
-		printf("Name has a length of zero");
+		printf("Name has a length of zero\n");
 		return 0;
-	} else if (nameSize > NAME_LENGTH) {
-		printf("Name too long");
+	//Case: \0 falls on 11th byte
+	} else if (nameSize > (NAME_LENGTH + 1)) {
+		printf("Name too long\n");
+	} else if (nameSize == (NAME_LENGTH + 1)) {
+		nameSize--;
 	}
 
 	size_t pos = 0;
