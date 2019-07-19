@@ -114,3 +114,19 @@ size_t commandSet(unsigned char address, char *name, size_t nameSize,
 	sprintf(&dst[pos], "%hX", checksum);
 	return SET_COMMAND_LENGTH;
 }
+
+bool recvSet(char *src, size_t srcSize)
+{
+	if (srcSize != SET_RECV_LENGTH) {
+		return false;
+	}
+
+	if (src[0] != SET_RECV_BYTE) {
+		return false;
+	}
+
+	char temp[CHECKSUM_LENGTH + 1];
+	sprintf(temp, "%hX", SET_RECV_BYTE);
+
+	return !strncmp(temp, &src[1], CHECKSUM_LENGTH);	
+}

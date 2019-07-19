@@ -1,5 +1,6 @@
 #pragma once
 #include <stddef.h>
+#include <stdbool.h>
 
 static const char START_BYTE = 0x02;
 static const char STOP_BYTE = 0x03;
@@ -8,16 +9,22 @@ static const char SET_RECV_BYTE = 'j';
 static const char QUERRY_BYTE = 'I';
 static const char QUERRY_RECV_BYTE = 'i';
 
-
 static const size_t ADDRESS_LENGTH = sizeof(unsigned short);
 static const size_t NAME_LENGTH = 10;
 static const size_t STATE_LENGTH = sizeof(unsigned short);
 static const size_t ALARM_LENGTH = sizeof(char);
 static const size_t CHECKSUM_LENGTH = sizeof(unsigned short);
 
+static const size_t SET_COMMAND_LENGTH = 40; 
+static const size_t SET_RECV_LENGTH = 3; 
 static const size_t SET_FIRST_UNKNOWN_LENGTH = 18;
 static const size_t SET_SECOND_UNKNOWN_LENGTH = 3;
-static const size_t SET_COMMAND_LENGTH = 40; 
+static const size_t QUERRY_COMMAND_LENGTH = 5;
+static const size_t QUERRY_RECV_LENGTH = 42;
+static const size_t QUERRY_FIRST_UNKNOWN_LENGTH = 3;
+static const size_t QUERRY_SECOND_UNKNOWN_LENGTH = 6;
+static const size_t QUERRY_THIRD_UNKNOWN_LENGTH = 4;
+static const size_t QUERRY_FOURTH_UNKNOWN_LENGTH = 8;
 
 //returns new pos
 size_t pad0(size_t count, size_t pos, char *dst);
@@ -39,3 +46,6 @@ unsigned short calculateChecksum(char *src, size_t size);
 size_t commandSet(unsigned char address, char *name, size_t nameSize,
 		  	unsigned short switchState, unsigned short lowAlarm,
 		 	unsigned highAlarm, char *dst);
+
+//Returns true if the received string is valid
+bool recvSet(char *src, size_t srcSize);
