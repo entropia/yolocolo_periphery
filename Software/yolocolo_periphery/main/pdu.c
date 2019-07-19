@@ -32,6 +32,16 @@ size_t unwrapFrame(char *src, size_t srcSize, char *dst)
 {
 	if (srcSize < 2) {
 		printf("Too short frame\n");
+		return 0;
+	}
+
+	if (src[0] != START_BYTE) {
+		printf("Start byte of frame is invalid: (%hhX)\n", src[0]);
+		return 0;
+	}
+	if (src[srcSize - 1] != STOP_BYTE) {
+		printf("Stop byte of frame is invalid: (%hhX)\n", src[srcSize -1]);
+		return 0;
 	}
 
 	memcpy(dst, &src[1], srcSize - 2);
