@@ -28,6 +28,7 @@ static const size_t QUERRY_FOURTH_UNKNOWN_LENGTH = 8;
 
 //returns new pos
 size_t pad0(size_t count, size_t pos, char *dst);
+unsigned short calculateChecksum(char *src, size_t size);
 
 //Add's start and stop byte to frame
 //Requires a buffer of srcSize + 2
@@ -38,7 +39,6 @@ size_t wrapFrame(char *src, size_t srcSize, char *dst);
 //Returns srcSize - 2 if successful, else 0
 size_t unwrapFrame(char *src, size_t srcSize, char *dst);
 
-unsigned short calculateChecksum(char *src, size_t size);
 
 //Does not print the created string
 //Returns > 0 if successful
@@ -46,6 +46,11 @@ unsigned short calculateChecksum(char *src, size_t size);
 size_t commandSet(unsigned char address, char *name, size_t nameSize,
 		  	unsigned short switchState, unsigned short lowAlarm,
 		 	unsigned highAlarm, char *dst);
-
 //Returns true if the received string is valid
 bool recvSet(char *src, size_t srcSize);
+
+
+//Does not print the created string
+//Requires a buffer of >= QUERRY_COMMAND_LENGTH
+//Returns QUERRY_COMMAND_LENGTH if successful, otherwise 0
+size_t commandQuerry(unsigned char address, char *dst);

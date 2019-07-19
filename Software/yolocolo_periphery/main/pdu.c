@@ -130,3 +130,23 @@ bool recvSet(char *src, size_t srcSize)
 
 	return !strncmp(temp, &src[1], CHECKSUM_LENGTH);	
 }
+
+size_t commandQuerry(unsigned char address, char *dst) 
+{
+	if (address == 0 || address >= 8) {
+		printf("Invalid address: (%hhu)\n", address);
+	}
+
+	size_t pos = 0;
+
+	dst[pos] = QUERRY_BYTE;
+	pos++;
+
+	sprintf(&dst[pos], "%hX", address);
+	pos += ADDRESS_LENGTH;
+	
+	unsigned short checksum = calculateChecksum(dst, QUERRY_COMMAND_LENGTH - CHECKSUM_LENGTH);
+	sprintf(&dst[pos], "%hX", checksum);
+
+	return QUERRY_COMMAND_LENGTH;
+}
