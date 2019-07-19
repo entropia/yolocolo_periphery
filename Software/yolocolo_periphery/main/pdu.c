@@ -13,7 +13,7 @@ size_t pad0(size_t count, size_t pos, char *dst)
 	return pos + count;
 }
 
-size_t completeFrame(char *src, size_t srcSize, char *dst)
+size_t wrapFrame(char *src, size_t srcSize, char *dst)
 {
 	if(srcSize == 0) {
 		return 0;
@@ -26,6 +26,17 @@ size_t completeFrame(char *src, size_t srcSize, char *dst)
 	dst[dstSize - 1] = STOP_BYTE;
 
 	return dstSize;
+}
+
+size_t unwrapFrame(char *src, size_t srcSize, char *dst)
+{
+	if (srcSize < 2) {
+		printf("Too short frame\n");
+	}
+
+	memcpy(dst, &src[1], srcSize - 2);
+
+	return srcSize - 2;
 }
 
 unsigned short calculateChecksum(char *src, size_t size) 

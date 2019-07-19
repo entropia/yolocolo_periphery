@@ -21,7 +21,11 @@ size_t pad0(size_t count, size_t pos, char *dst);
 //Add's start and stop byte to frame
 //Requires a buffer of srcSize + 2
 //Returns > 0 if successful
-size_t completeFrame(char *src, size_t srcSize, char *dst);
+size_t wrapFrame(char *src, size_t srcSize, char *dst);
+//Removes the start and stop byte from the frame
+//Requires a buffer of srcSize - 2
+//Returns srcSize - 2 if successful, else 0
+size_t unwrapFrame(char *src, size_t srcSize, char *dst);
 
 unsigned short calculateChecksum(char *src, size_t size);
 
