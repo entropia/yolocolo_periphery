@@ -15,7 +15,7 @@ size_t pad0(size_t count, size_t pos, char *dst)
 }
 
 //Add's start and stop byte to frame
-size_t completeFrame(char* src, size_t srcSize, char** dst)
+size_t completeFrame(char *src, size_t srcSize, char **dst)
 {
 	if(srcSize == 0) {
 		return 0;
@@ -31,7 +31,7 @@ size_t completeFrame(char* src, size_t srcSize, char** dst)
 	return dstSize;
 }
 
-unsigned short calculateChecksum(char* src, size_t size) 
+unsigned short calculateChecksum(char *src, size_t size) 
 {
 	if (size == 0) {
 		printf("Checksum error: Length of src is zero");
@@ -47,7 +47,7 @@ unsigned short calculateChecksum(char* src, size_t size)
 }
 
 //Only produces the string to be printed
-size_t commandSet(unsigned char address, char* name, size_t nameSize,
+size_t commandSet(unsigned char address, char *name, size_t nameSize,
 		  	unsigned short switchState, unsigned short lowAlarm,
 		 	unsigned highAlarm, char *dst)
 {
