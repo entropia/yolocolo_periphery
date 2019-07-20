@@ -13,6 +13,24 @@ size_t pad0(size_t count, size_t pos, char *dst)
 	return pos + count;
 }
 
+void decodeSocket(unsigned char encoded, bool socketState[SOCKET_COUNT])
+{
+	for (size_t i = 0; i < SOCKET_COUNT; i++) {
+		socketState[i] = encoded & (1 << i);
+	}
+
+}
+
+unsigned short encodeSocket(bool socketState[SOCKET_COUNT])
+{ 
+	unsigned short encoded = 0;
+	for (size_t i = 0; i < SOCKET_COUNT; i++) {
+		encoded += socketState[i] << i;
+	}
+
+	return encoded;
+}
+
 size_t wrapFrame(char *src, size_t srcSize, char *dst)
 {
 	if(srcSize == 0) {
