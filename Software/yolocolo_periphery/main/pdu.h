@@ -63,7 +63,7 @@ size_t unwrapFrame(char *src, size_t srcSize, char *dst);
 //Returns > 0 if successful
 //Requires an dstSize of >= SET_COMMAND_LENGTH
 size_t commandSet(unsigned char address, char *name, size_t nameSize,
-		  	unsigned short switchState, unsigned short lowAlarm,
+		  	unsigned char socketState, unsigned short lowAlarm,
 		 	unsigned highAlarm, char *dst);
 //Returns true if the received string is valid
 bool recvSet(char *src);
