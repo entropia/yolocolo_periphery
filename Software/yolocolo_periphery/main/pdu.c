@@ -65,7 +65,7 @@ unsigned short calculateChecksum(char *src, size_t size)
 }
 
 size_t commandSet(unsigned char address, char *name, size_t nameSize,
-		  	unsigned short switchState, unsigned short lowAlarm,
+		  	unsigned char socketState, unsigned short lowAlarm,
 		 	unsigned highAlarm, char *dst)
 {
 	if (address == 0 || address > 8) {
@@ -94,7 +94,7 @@ size_t commandSet(unsigned char address, char *name, size_t nameSize,
 	pos += nameSize;
 	pos = pad0(NAME_LENGTH - nameSize, pos, dst);
 
-	sprintf(&dst[pos], "%02hu", switchState);
+	sprintf(&dst[pos], "%02hu", socketState);
 	pos += STATE_LENGTH;
 
 	sprintf(&dst[pos], "%0*d\n", SET_FIRST_UNKNOWN_LENGTH, 0); 
@@ -149,6 +149,19 @@ size_t commandQuerry(unsigned char address, char *dst)
 
 bool recvQuerry(char *src, unsigned char address, struct stQuerryRecv *recv)
 {
+	char tempHexBuffer[CHECKSUM_LENGTH + 1];
+
+	memcpy(tempHexBuffer, &src[QUERRY_RECV_LENGTH - CHECKSUM_LENGTH - 1], CHECKSUM_LENGTH);
+	tempHexBuffer[CHECKSUM_LENGTH] = 0;
+	unsigned char checksum = strtoul(tempHexBuffer, NULL, 16);
+	unsigned char tempChecksum = calculateChecksum(src, QUERRY_RECV_LENGTH - CHECKSUM_LENGTH);
+	if (checksum != tempChecksum) {
+		printf("Calcalated Checksum: (%hhx) differs from sent Checksum: (%hhx)",
+				tempChecksum, checksum);
+		return 0;
+	}
+
+
 	size_t pos = 0;
 	
 	if (src[pos] != QUERRY_RECV_BYTE) {
@@ -156,10 +169,8 @@ bool recvQuerry(char *src, unsigned char address, struct stQuerryRecv *recv)
 	}
 	pos++;
 
-	char usTemp[ADDRESS_LENGTH + 1];
-	sprintf(usTemp, "%hhu", address);
-
-	if (!strncmp(usTemp, &src[pos], ADDRESS_LENGTH)) {
+	sprintf(tempHexBuffer, "%hhu", address);
+	if (!strncmp(tempHexBuffer, &src[pos], ADDRESS_LENGTH)) {
 		printf("Addresses do not match\n");
 		return false;
 	}
@@ -168,18 +179,21 @@ bool recvQuerry(char *src, unsigned char address, struct stQuerryRecv *recv)
 	memcpy(recv->name, &src[pos], NAME_LENGTH);
 	//\0-terminate
 	if (src[pos + NAME_LENGTH - 1] == 0) {
-		src->name[NAME_LENGTH] = 0;
+		recv->name[NAME_LENGTH] = 0;
 	}
-	pos += QUERRY_SECOND_UKNOWN_LENGTH;
+	pos += QUERRY_SECOND_UNKNOWN_LENGTH;
 
 	char powerBuffer[POWER_LENGTH + 1];
 	memcpy(powerBuffer, &src[pos], POWER_LENGTH);
 	powerBuffer[POWER_LENGTH] = 0;
-
 	//hex-string
-	src->power = (unsigned short) strutol(src, NULL, 16);
+	recv->power = (unsigned short) strtoul(powerBuffer, NULL, 16);
 	pos += POWER_LENGTH;
 	pos += QUERRY_THIRD_UNKNOWN_LENGTH;
 
+	memcpy(tempHexBuffer, &src[pos], NAME_LENGTH + 1);
+	unsigned char tempEncoded = strtoul(tempHexBuffer, NULL, 16);
+	decodeSocket(tempEncoded, recv->socketState);
 
+	return true;
 }

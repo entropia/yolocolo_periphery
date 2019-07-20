@@ -46,7 +46,7 @@ struct stQuerryRecv {
 //returns new pos
 size_t pad0(size_t count, size_t pos, char *dst);
 unsigned short calculateChecksum(char *src, size_t size);
-void decodeSocket(unsigned short encoded, bool socketState[SOCKET_COUNT]);
+void decodeSocket(unsigned char encoded, bool socketState[SOCKET_COUNT]);
 unsigned short encodeSocket(bool socketState[SOCKET_COUNT]);
 
 //Add's start and stop byte to frame
