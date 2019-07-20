@@ -49,14 +49,14 @@ size_t unwrapFrame(char *src, size_t srcSize, char *dst)
 	return srcSize - 2;
 }
 
-unsigned short calculateChecksum(char *src, size_t size) 
+unsigned char calculateChecksum(char *src, size_t size) 
 {
 	if (size == 0) {
 		printf("Checksum error: Length of src is zero");
 		return 0;
 	}
 
-	unsigned short checksum = src[0];
+	unsigned char checksum = src[0];
 	for (size_t i = 1; i < size; i++) {
 		checksum ^= src[i];
 	}
@@ -109,7 +109,7 @@ size_t commandSet(unsigned char address, char *name, size_t nameSize,
 	sprintf(&dst[pos], "%hX", highAlarm);
 	pos++;
 
-	unsigned short checksum = calculateChecksum(dst, SET_COMMAND_LENGTH - CHECKSUM_LENGTH);
+	unsigned char checksum = calculateChecksum(dst, SET_COMMAND_LENGTH - CHECKSUM_LENGTH);
 
 	sprintf(&dst[pos], "%hX", checksum);
 	return SET_COMMAND_LENGTH;
@@ -141,7 +141,7 @@ size_t commandQuerry(unsigned char address, char *dst)
 	sprintf(&dst[pos], "%hX", address);
 	pos += ADDRESS_LENGTH;
 	
-	unsigned short checksum = calculateChecksum(dst, QUERRY_COMMAND_LENGTH - CHECKSUM_LENGTH);
+	unsigned char checksum = calculateChecksum(dst, QUERRY_COMMAND_LENGTH - CHECKSUM_LENGTH);
 	sprintf(&dst[pos], "%hX", checksum);
 
 	return QUERRY_COMMAND_LENGTH;
