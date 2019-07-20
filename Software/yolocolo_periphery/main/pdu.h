@@ -10,12 +10,12 @@ static const char QUERRY_BYTE = 'I';
 static const char QUERRY_RECV_BYTE = 'i';
 
 static const size_t ADDRESS_LENGTH = sizeof(unsigned short);
-static const size_t NAME_LENGTH = 10;
+#define NAME_LENGTH 10
 static const size_t STATE_LENGTH = sizeof(unsigned short);
 static const size_t POWER_LENGTH = 4;
 static const size_t ALARM_LENGTH = sizeof(char);
 static const size_t CHECKSUM_LENGTH = sizeof(unsigned short);
-static const size_t SOCKET_COUNT = 6;
+#define SOCKET_COUNT 6
 
 static const size_t SET_COMMAND_LENGTH = 40; 
 static const size_t SET_RECV_LENGTH = 3; 
@@ -46,6 +46,8 @@ struct stQuerryRecv {
 //returns new pos
 size_t pad0(size_t count, size_t pos, char *dst);
 unsigned short calculateChecksum(char *src, size_t size);
+void decodeSocket(unsigned short encoded, bool socketState[SOCKET_COUNT]);
+unsigned short encodeSocket(bool socketState[SOCKET_COUNT]);
 
 //Add's start and stop byte to frame
 //Requires a buffer of srcSize + 2
