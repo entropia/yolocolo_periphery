@@ -115,12 +115,8 @@ size_t commandSet(unsigned char address, char *name, size_t nameSize,
 	return SET_COMMAND_LENGTH;
 }
 
-bool recvSet(char *src, size_t srcSize)
+bool recvSet(char *src)
 {
-	if (srcSize != SET_RECV_LENGTH) {
-		return false;
-	}
-
 	if (src[0] != SET_RECV_BYTE) {
 		return false;
 	}
@@ -149,4 +145,41 @@ size_t commandQuerry(unsigned char address, char *dst)
 	sprintf(&dst[pos], "%hX", checksum);
 
 	return QUERRY_COMMAND_LENGTH;
+}
+
+bool recvQuerry(char *src, unsigned char address, struct stQuerryRecv *recv)
+{
+	size_t pos = 0;
+	
+	if (src[pos] != QUERRY_RECV_BYTE) {
+		return false;
+	}
+	pos++;
+
+	char usTemp[ADDRESS_LENGTH + 1];
+	sprintf(usTemp, "%hhu", address);
+
+	if (!strncmp(usTemp, &src[pos], ADDRESS_LENGTH)) {
+		printf("Addresses do not match\n");
+		return false;
+	}
+	pos += QUERRY_FIRST_UNKNOWN_LENGTH;
+
+	memcpy(recv->name, &src[pos], NAME_LENGTH);
+	//\0-terminate
+	if (src[pos + NAME_LENGTH - 1] == 0) {
+		src->name[NAME_LENGTH] = 0;
+	}
+	pos += QUERRY_SECOND_UKNOWN_LENGTH;
+
+	char powerBuffer[POWER_LENGTH + 1];
+	memcpy(powerBuffer, &src[pos], POWER_LENGTH);
+	powerBuffer[POWER_LENGTH] = 0;
+
+	//hex-string
+	src->power = (unsigned short) strutol(src, NULL, 16);
+	pos += POWER_LENGTH;
+	pos += QUERRY_THIRD_UNKNOWN_LENGTH;
+
+
 }
