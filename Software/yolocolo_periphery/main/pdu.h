@@ -33,7 +33,7 @@ struct stSetSend {
 	char name[NAME_LENGTH + 1];
 	bool socketState[SOCKET_COUNT];
 	unsigned char lowAlarm;
-	unsigned char HighAlarm;
+	unsigned char highAlarm;
 };
 
 struct stQuerryRecv {
@@ -62,9 +62,7 @@ size_t unwrapFrame(char *src, size_t srcSize, char *dst);
 //Does not print the created string
 //Returns > 0 if successful
 //Requires an dstSize of >= SET_COMMAND_LENGTH
-size_t commandSet(unsigned char address, char *name, size_t nameSize,
-		  	unsigned char socketState, unsigned short lowAlarm,
-		 	unsigned highAlarm, char *dst);
+size_t commandSet(struct stSetSend *send, char *dst);
 //Returns true if the received string is valid
 bool recvSet(char *src);
 
