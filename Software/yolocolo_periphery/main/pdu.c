@@ -82,15 +82,14 @@ unsigned char calculateChecksum(char *src, size_t size)
 	return checksum;
 }
 
-size_t commandSet(unsigned char address, char *name, size_t nameSize,
-		  	unsigned char socketState, unsigned short lowAlarm,
-		 	unsigned highAlarm, char *dst)
+size_t commandSet(struct stSetSend *send, char *dst)
 {
-	if (address == 0 || address > 8) {
-		printf("Invalid address (%u)\n", address);
+	if (send->address == 0 || send->address > 8) {
+		printf("Invalid address (%u)\n", send->address);
 		return 0;
 	}
-
+	
+	size_t nameSize = strlen(send->name);
 	if (nameSize == 0) {
 		printf("Name has a length of zero\n");
 		return 0;
@@ -105,26 +104,27 @@ size_t commandSet(unsigned char address, char *name, size_t nameSize,
 	dst[pos] = SET_BYTE;
 	pos++;
 
-	sprintf(&dst[pos], "%02hu", address);
+	sprintf(&dst[pos], "%02hu", send->address);
 	pos += ADDRESS_LENGTH;
 
-	strcpy(&dst[pos], name);
+	strcpy(&dst[pos], send->name);
 	pos += nameSize;
 	pos = pad0(NAME_LENGTH - nameSize, pos, dst);
 
+	unsigned char socketState = encodeSocket(send->socketState);
 	sprintf(&dst[pos], "%02hu", socketState);
 	pos += STATE_LENGTH;
 
 	sprintf(&dst[pos], "%0*d\n", SET_FIRST_UNKNOWN_LENGTH, 0); 
 	pos += SET_FIRST_UNKNOWN_LENGTH;
 
-	sprintf(&dst[pos], "%hX", lowAlarm);
+	sprintf(&dst[pos], "%hX", send->lowAlarm);
 	pos++;
 
 	sprintf(&dst[pos], "%0*d\n", SET_SECOND_UNKNOWN_LENGTH, 0); 
 	pos += SET_SECOND_UNKNOWN_LENGTH;
 
-	sprintf(&dst[pos], "%hX", highAlarm);
+	sprintf(&dst[pos], "%hX", send->highAlarm);
 	pos++;
 
 	unsigned char checksum = calculateChecksum(dst, SET_COMMAND_LENGTH - CHECKSUM_LENGTH);
