@@ -47,3 +47,4 @@ _deps
 
 # ESP8266
 build/
+sdkconfig.old
