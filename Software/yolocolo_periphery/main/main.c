@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "esp_system.h"
+#include "bme280.h"
 
 void app_main(void)
 {
